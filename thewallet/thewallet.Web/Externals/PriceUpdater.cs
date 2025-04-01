@@ -15,7 +15,7 @@ public class PriceUpdater : BackgroundService
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
+    {/*
         while (!stoppingToken.IsCancellationRequested)
         {
             using (var scope = _serviceProvider.CreateScope())
@@ -61,6 +61,6 @@ public class PriceUpdater : BackgroundService
             }
 
             await Task.Delay(TimeSpan.FromMinutes(6), stoppingToken);
-        }
+        }*/
     }
 }

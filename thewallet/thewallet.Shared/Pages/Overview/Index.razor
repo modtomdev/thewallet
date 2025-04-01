@@ -7,5 +7,15 @@
 
 Welcome to your new app running on <em>@Factor</em> using <em>@Platform</em>.
 
+<ApexChart TItem="GraphDTO"
+           Title="Portfolio Value Over Time">
+
+    <ApexPointSeries TItem="GraphDTO"
+                     Items="Data"
+                     Name="Total Value (EUR)"
+                     SeriesType="SeriesType.Area"
+                     XValue="e => e.SnapshotTimestamp"
+                     YValue="e => e.TotalValueEur" />
+</ApexChart>
 
 <h2>The total value of main user test db is €@_totalValue</h2>

@@ -1,3 +1,4 @@
+using ApexCharts;
 using thewallet.Shared.Services;
 using thewallet.Web.Components;
 using thewallet.Web.Endpoints;
@@ -34,6 +35,16 @@ builder.Services.AddScoped<YahooScraper>();
 builder.Services.AddHostedService<PriceUpdater>();
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddApexCharts(e =>
+{
+    e.GlobalOptions = new ApexChartBaseOptions
+    {
+        Debug = true,
+        Theme = new Theme { Palette = PaletteType.Palette6 }
+    };
+});
+
 
 var app = builder.Build();
 

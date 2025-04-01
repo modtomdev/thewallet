@@ -38,7 +38,7 @@ public class OverviewDataAccess : IOverviewService
         const string query = """
 
             SELECT 
-                gs.graph_time AS SnapshotTimestamp,
+            gs.graph_time AS SnapshotTimestamp,
             COALESCE(SUM(gs.account_value_eur), 0) AS TotalValueEur
             FROM graph_snapshots gs
             JOIN accounts a ON gs.account_id = a.id

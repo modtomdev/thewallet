@@ -1,3 +1,4 @@
+using ApexCharts;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using thewallet.Shared.Services;
 using thewallet.Web.Client.Services.DomainServices;
@@ -24,5 +25,14 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRecurringTransactionService, RecurringTransactionService>();
 
 builder.Services.AddScoped<IOverviewService, OverviewService>();
+
+builder.Services.AddApexCharts(e =>
+{
+    e.GlobalOptions = new ApexChartBaseOptions
+    {
+        Debug = true,
+        Theme = new Theme { Palette = PaletteType.Palette6 }
+    };
+});
 
 await builder.Build().RunAsync();
