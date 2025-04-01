@@ -27,5 +27,4 @@ public static class OverviewEndpoints
         var graphDto = await data.GetGraphDTOsAsync();
         return TypedResults.Ok(graphDto);
     }
-
 }
