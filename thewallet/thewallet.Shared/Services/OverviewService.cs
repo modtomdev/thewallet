@@ -14,13 +14,13 @@ public class OverviewService : IOverviewService
         _httpClient = httpClient;
     }
 
-    public Task<IEnumerable<AccountDTO>> GetAccountDTOsAsync()
+    public async Task<IEnumerable<AccountDTO>> GetAccountDTOsAsync()
     {
-        return _httpClient.GetFromJsonAsync<IEnumerable<AccountDTO>>($"thewalletapi/overview/user1")!;
+        return await _httpClient.GetFromJsonAsync<IEnumerable<AccountDTO>>($"thewalletapi/overview/user1") ?? [];
     }
 
-    public Task<IEnumerable<GraphDTO>> GetGraphDTOsAsync()
+    public async Task<IEnumerable<GraphDTO>> GetGraphDTOsAsync()
     {
-        return _httpClient.GetFromJsonAsync<IEnumerable<GraphDTO>>($"thewalletapi/overview/graph/user1")!;
+        return await _httpClient.GetFromJsonAsync<IEnumerable<GraphDTO>>($"thewalletapi/overview/graph/user1") ?? [];
     }
 }

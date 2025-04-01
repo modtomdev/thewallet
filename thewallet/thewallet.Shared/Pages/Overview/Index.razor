@@ -4,18 +4,22 @@
 
 <PageTitle>Overview</PageTitle>
 <h1>Welcome! Take a look at your holdings!</h1>
+<div>Welcome to your new app running on <em>@Factor</em> using <em>@Platform</em>.</div>
 
-Welcome to your new app running on <em>@Factor</em> using <em>@Platform</em>.
-
-<ApexChart TItem="GraphDTO"
-           Title="Portfolio Value Over Time">
-
-    <ApexPointSeries TItem="GraphDTO"
-                     Items="Data"
-                     Name="Total Value (EUR)"
-                     SeriesType="SeriesType.Area"
-                     XValue="e => e.SnapshotTimestamp"
-                     YValue="e => e.TotalValueEur" />
-</ApexChart>
+@if (_graph != null && _graph.Any())
+{
+    <ApexChart TItem="GraphDTO" Title="Net worth">
+        <ApexPointSeries TItem="GraphDTO"
+                         Items="_graph"
+                         Name="Net Profit"
+                         SeriesType="SeriesType.Area"
+                         XValue="e => e.SnapshotTimestamp" truncate
+                         YValue="e => e.TotalValueEur" />
+    </ApexChart>
+}
+else
+{
+    <p>Loading chart data...</p>
+}
 
 <h2>The total value of main user test db is €@_totalValue</h2>
