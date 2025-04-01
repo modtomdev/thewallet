@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Bootstrap" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Charts" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.3" />
   </ItemGroup>
 

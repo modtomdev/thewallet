@@ -1,6 +1,3 @@
-using Blazorise;
-using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using thewallet.Shared.Services;
 using thewallet.Web.Client.Services.DomainServices;
@@ -27,13 +24,5 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRecurringTransactionService, RecurringTransactionService>();
 
 builder.Services.AddScoped<IOverviewService, OverviewService>();
-
-builder.Services
-    .AddBlazorise(options =>
-    {
-        options.Immediate = true;
-    })
-    .AddBootstrapProviders()
-    .AddFontAwesomeIcons();
 
 await builder.Build().RunAsync();

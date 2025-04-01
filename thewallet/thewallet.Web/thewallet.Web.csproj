@@ -10,10 +10,6 @@
     <ProjectReference Include="..\thewallet.Shared\thewallet.Shared.csproj" />
     <ProjectReference Include="..\thewallet.Web.Client\thewallet.Web.Client.csproj" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-    <PackageReference Include="Blazorise" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Bootstrap" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Charts" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.5" />
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3" />

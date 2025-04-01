@@ -61,10 +61,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Bootstrap" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Charts" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.5" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.50" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.50" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.3" />

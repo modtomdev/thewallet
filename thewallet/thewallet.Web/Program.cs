@@ -1,4 +1,3 @@
-using Blazorise;
 using thewallet.Shared.Services;
 using thewallet.Web.Components;
 using thewallet.Web.Endpoints;
@@ -6,9 +5,6 @@ using thewallet.Web.Externals;
 using thewallet.Web.Externals.CoinMarketCap;
 using thewallet.Web.Externals.YahooFinance;
 using thewallet.Web.Services;
-using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,14 +32,6 @@ builder.Services.AddScoped<CMCDataAccess>();
 builder.Services.AddScoped<YahooScraper>();
 
 builder.Services.AddHostedService<PriceUpdater>();
-
-builder.Services
-    .AddBlazorise(options =>
-    {
-        options.Immediate = true;
-    })
-    .AddBootstrapProviders()
-    .AddFontAwesomeIcons();
 
 builder.Services.AddOpenApi();
 
