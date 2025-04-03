@@ -1,6 +1,6 @@
 ﻿using ApexCharts;
 using Microsoft.AspNetCore.Components;
-using thewallet.Shared.Models.DTOs.Overview;
+using thewallet.Shared.Models.DTOs;
 
 namespace thewallet.Shared.Pages.Overview;
 
@@ -9,7 +9,7 @@ public partial class Index
     private string Factor => FormFactor.GetFormFactor();
     private string Platform => FormFactor.GetPlatform();
 
-    private IEnumerable<AccountDTO> _accounts = [];
+    private IEnumerable<OverviewDTO> _accounts = [];
     private IEnumerable<GraphDTO> _graph = [];
 
     private bool _graphIsLoading = true;
@@ -27,8 +27,8 @@ public partial class Index
         _accounts = await OverviewService.GetAccountDTOsAsync();
         _totalValue = Math.Round(_accounts.Sum(x => x.TotalValueEur), 2);
     }
-    private void OnClick(object sender)
+    private void OnAccountClick(OverviewDTO overview)
     {
-
+        NavigationManager.NavigateTo($"accounts/{overview.AccountId}");
     }
 }

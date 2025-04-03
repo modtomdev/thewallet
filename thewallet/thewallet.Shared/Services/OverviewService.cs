@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Models.DTOs.Overview;
+using thewallet.Shared.Models.DTOs;
 using thewallet.Web.Services;
 
 namespace thewallet.Shared.Services;
@@ -14,9 +14,9 @@ public class OverviewService : IOverviewService
         _httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<AccountDTO>> GetAccountDTOsAsync()
+    public async Task<IEnumerable<OverviewDTO>> GetAccountDTOsAsync()
     {
-        return await _httpClient.GetFromJsonAsync<IEnumerable<AccountDTO>>($"thewalletapi/overview/user1") ?? [];
+        return await _httpClient.GetFromJsonAsync<IEnumerable<OverviewDTO>>($"thewalletapi/overview/user1") ?? [];
     }
 
     public async Task<IEnumerable<GraphDTO>> GetGraphDTOsAsync()

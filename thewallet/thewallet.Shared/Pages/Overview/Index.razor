@@ -38,7 +38,7 @@ else
         @foreach(var item in _accounts)
         {
             <div class="col-12 mt-2">
-                <div class="d-flex justify-content-between p-3 border rounded clickable" @onclick="() => OnClick(item)">
+                <div class="d-flex justify-content-between p-3 border rounded clickable" @onclick="() => OnAccountClick(item)">
                     <span>@item.AccountName</span>
                     <span class="fw-bold">€@Math.Round(item.TotalValueEur, 2)</span>
                 </div>

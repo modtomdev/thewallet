@@ -2,7 +2,6 @@
 using Dapper;
 using thewallet.Shared.Models.DomainModels;
 using thewallet.Shared.Models.DTOs;
-using thewallet.Shared.Models.DTOs.Overview;
 
 namespace thewallet.Web.Services;
 
@@ -15,12 +14,13 @@ public class OverviewDataAccess : IOverviewService
                                 throw new Exception("Missing db connection string.");
     }
 
-    public async Task<IEnumerable<AccountDTO>> GetAccountDTOsAsync() //fixed on user1
+    public async Task<IEnumerable<OverviewDTO>> GetAccountDTOsAsync() //fixed on user1
     {
         const string query = """
 
             SELECT 
-                a.name AS AccountName, 
+            a.id AS AccountId,
+            a.name AS AccountName, 
             COALESCE(SUM(ah.quantity * ass.current_value_eur), 0) AS TotalValueEur
             FROM accounts a
             LEFT JOIN asset_holdings ah ON a.id = ah.account_id
@@ -31,7 +31,7 @@ public class OverviewDataAccess : IOverviewService
             """;
 
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryAsync<AccountDTO>(query);
+        return await connection.QueryAsync<OverviewDTO>(query);
     }
     public async Task<IEnumerable<GraphDTO>> GetGraphDTOsAsync() //fixed on user1
     {

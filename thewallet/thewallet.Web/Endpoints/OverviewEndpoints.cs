@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Models.DTOs.Overview;
+using thewallet.Shared.Models.DTOs;
 using thewallet.Web.Services;
 
 namespace thewallet.Web.Endpoints;
@@ -17,7 +17,7 @@ public static class OverviewEndpoints
         return route;
     }
 
-    private static async Task<Ok<IEnumerable<AccountDTO>>> GetAccountsAsync(IOverviewService data)
+    private static async Task<Ok<IEnumerable<OverviewDTO>>> GetAccountsAsync(IOverviewService data)
     {
         var accountDto = await data.GetAccountDTOsAsync();
         return TypedResults.Ok(accountDto);

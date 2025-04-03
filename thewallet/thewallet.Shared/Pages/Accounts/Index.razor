@@ -1,2 +1,16 @@
 ﻿@page "/accounts"
+@inject IFormFactor FormFactor
+@inject IAccountService AccountService
+@inject NavigationManager NavigationManager
+
 <PageTitle>Accounts</PageTitle>
+
+@foreach (var item in _accounts)
+{
+    <div class="col-12 mt-2">
+        <div class="d-flex justify-content-between p-3 border rounded clickable" @onclick="() => OnAccountClick(item)">
+            <span>xxxx</span>
+            <span class="fw-bold">€xxxx</span>
+        </div>
+    </div>
+}

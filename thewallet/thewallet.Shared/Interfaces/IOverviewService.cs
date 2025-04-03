@@ -1,10 +1,10 @@
 ﻿using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Models.DTOs.Overview;
+using thewallet.Shared.Models.DTOs;
 
 namespace thewallet.Web.Services;
 
 public interface IOverviewService
 {
-    Task<IEnumerable<AccountDTO>> GetAccountDTOsAsync();
+    Task<IEnumerable<OverviewDTO>> GetAccountDTOsAsync();
     Task<IEnumerable<GraphDTO>> GetGraphDTOsAsync();
 }
