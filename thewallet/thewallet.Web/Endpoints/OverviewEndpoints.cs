@@ -17,12 +17,12 @@ public static class OverviewEndpoints
         return route;
     }
 
-    private static async Task<Ok<IEnumerable<OverviewDTO>>> GetAccountsAsync(IOverviewService data)
+    private static async Task<Ok<IEnumerable<AccountDTO>>> GetAccountsAsync(IOverviewService data)
     {
         var accountDto = await data.GetAccountDTOsAsync();
         return TypedResults.Ok(accountDto);
     }
-    private static async Task<Ok<IEnumerable<GraphDTO>>> GetGraphAsync(IOverviewService data)
+    private static async Task<Ok<IEnumerable<GraphSnapshotDTO>>> GetGraphAsync(IOverviewService data)
     {
         var graphDto = await data.GetGraphDTOsAsync();
         return TypedResults.Ok(graphDto);

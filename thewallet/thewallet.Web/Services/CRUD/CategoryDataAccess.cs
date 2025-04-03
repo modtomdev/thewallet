@@ -1,83 +1,89 @@
 ﻿using Npgsql;
 using Dapper;
 using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Services;
+using thewallet.Shared.Interfaces.CRUD;
 
-namespace thewallet.Web.Services;
-public class AccountDataAccess : IAccountService
+namespace thewallet.Web.Services.CRUD;
+
+public class CategoryDataAccess : ICategoryService
 {
     private readonly string _connectionString = "";
-    public AccountDataAccess(IConfiguration configuration)
+    public CategoryDataAccess(IConfiguration configuration)
     {
         _connectionString = configuration.GetConnectionString("db") ??
                                 throw new Exception("Missing db connection string.");
     }
 
-    public async Task<IEnumerable<Account>> GetAllAsync()
+    public async Task<IEnumerable<Category>> GetAllAsync()
     {
         const string query = """
 
             SELECT
             id          as Id,
-            user_id     as UserId,
             name        as Name,
+            user_id     as UserId,
+            is_expense  as IsExpense,
             created_at  as CreatedAt
-            FROM public.accounts;
+            FROM public.categories;
 
             """;
 
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryAsync<Account>(query);
+        return await connection.QueryAsync<Category>(query);
     }
-    public async Task<Account?> GetByIdAsync(int id)
+    public async Task<Category?> GetByIdAsync(int id)
     {
         const string query = """
             SELECT
             id          as Id,
-            user_id     as UserId,
             name        as Name,
+            user_id     as UserId,
+            is_expense  as IsExpense,
             created_at  as CreatedAt
-            FROM public.accounts
+            FROM public.categories
             WHERE id = @id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryFirstOrDefaultAsync<Account>(query, new { id });
+        return await connection.QueryFirstOrDefaultAsync<Category>(query, new { id });
     }
-    public async Task<int> CreateAsync(Account account)
+    public async Task<int> CreateAsync(Category category)
     {
         const string query = """
-            INSERT INTO public.accounts
-            (user_id,
-            name,
+            INSERT INTO public.categories
+            (name,
+            user_id,
+            is_expense,
             created_at)
             VALUES
-            (@UserId,
-            @Name,
+            (@Name,
+            @UserId,
+            @IsExpense,
             now())
             RETURNING id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
-        account.Id = await connection.ExecuteScalarAsync<int>(query, account);
-        return account.Id;
+        category.Id = await connection.ExecuteScalarAsync<int>(query, category);
+        return category.Id;
     }
-    public async Task<bool> UpdateAsync(Account account)
+    public async Task<bool> UpdateAsync(Category category)
     {
         const string query = """
-            UPDATE public.accounts
+            UPDATE public.categories
             SET
+            name = @Name,
             user_id = @UserId,
-            name = @Name
+            is_expense = @IsExpense,
             WHERE
             id = @Id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
-        var affectedRows = await connection.ExecuteAsync(query, account);
+        var affectedRows = await connection.ExecuteAsync(query, category);
         return affectedRows > 0;
     }
     public async Task<bool> DeleteAsync(int id)
     {
         const string query = """
-            DELETE FROM public.accounts
+            DELETE FROM public.categories
             WHERE id = @id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
@@ -88,7 +94,7 @@ public class AccountDataAccess : IAccountService
     {
         const string query = """
             SELECT COUNT(*)
-            FROM public.accounts;
+            FROM public.categories;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
         return await connection.ExecuteScalarAsync<int>(query);

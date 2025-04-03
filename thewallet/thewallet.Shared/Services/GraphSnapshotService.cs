@@ -1,5 +1,5 @@
-﻿using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Services;
+﻿using thewallet.Shared.Interfaces.CRUD;
+using thewallet.Shared.Models.DomainModels;
 
 namespace thewallet.Web.Client.Services.DomainServices;
 

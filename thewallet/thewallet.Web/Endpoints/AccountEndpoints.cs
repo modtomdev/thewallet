@@ -1,7 +1,7 @@
 ﻿using System.Security.Principal;
 using Microsoft.AspNetCore.Http.HttpResults;
+using thewallet.Shared.Interfaces.CRUD;
 using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Services;
 
 namespace thewallet.Web.Endpoints;
 

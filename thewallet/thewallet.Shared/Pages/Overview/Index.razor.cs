@@ -9,8 +9,8 @@ public partial class Index
     private string Factor => FormFactor.GetFormFactor();
     private string Platform => FormFactor.GetPlatform();
 
-    private IEnumerable<OverviewDTO> _accounts = [];
-    private IEnumerable<GraphDTO> _graph = [];
+    private IEnumerable<AccountDTO> _accounts = [];
+    private IEnumerable<GraphSnapshotDTO> _graph = [];
 
     private bool _graphIsLoading = true;
     private decimal _totalValue;
@@ -24,10 +24,10 @@ public partial class Index
         }
         _graphIsLoading = false;
 
-        _accounts = await OverviewService.GetAccountDTOsAsync();
+        _accounts = await OverviewService.GetOverviewAsync();
         _totalValue = Math.Round(_accounts.Sum(x => x.TotalValueEur), 2);
     }
-    private void OnAccountClick(OverviewDTO overview)
+    private void OnAccountClick(AccountDTO overview)
     {
         NavigationManager.NavigateTo($"accounts/{overview.AccountId}");
     }

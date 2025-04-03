@@ -1,89 +1,94 @@
 ﻿using Npgsql;
 using Dapper;
 using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Services;
+using thewallet.Shared.Interfaces.CRUD;
 
-namespace thewallet.Web.Services;
+namespace thewallet.Web.Services.CRUD;
 
-public class AssetDataAccess : IAssetService
+public class UserDataAccess : IUserService
 {
     private readonly string _connectionString = "";
-    public AssetDataAccess(IConfiguration configuration)
+    public UserDataAccess(IConfiguration configuration)
     {
         _connectionString = configuration.GetConnectionString("db") ??
                                 throw new Exception("Missing db connection string.");
     }
-    public async Task<IEnumerable<Asset>> GetAllAsync()
+
+    public async Task<IEnumerable<User>> GetAllAsync()
     {
         const string query = """
 
             SELECT
             id          as Id,
-            symbol      as Symbol,
-            name        as Name,
-            current_value_eur as CurrentValueEur,
-            value_timestamp as ValueTimestamp
-            FROM public.assets;
+            username    as Username,
+            password_hash as PasswordHash,
+            salt as PasswordSalt,
+            cmc_apikey as CmcApiKey,
+            created_at  as CreatedAt
+            FROM public.users;
 
             """;
 
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryAsync<Asset>(query);
+        return await connection.QueryAsync<User>(query);
     }
-    public async Task<Asset?> GetByIdAsync(int id)
+    public async Task<User?> GetByIdAsync(int id)
     {
         const string query = """
             SELECT
             id          as Id,
-            symbol      as Symbol,
-            name        as Name,
-            current_value_eur as CurrentValueEur,
-            value_timestamp as ValueTimestamp
-            FROM public.assets
+            username    as Username,
+            password_hash as PasswordHash,
+            salt as PasswordSalt,
+            cmc_apikey as CmcApiKey,
+            created_at  as CreatedAt
+            FROM public.users
             WHERE id = @id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryFirstOrDefaultAsync<Asset>(query, new { id });
+        return await connection.QueryFirstOrDefaultAsync<User>(query, new { id });
     }
-    public async Task<int> CreateAsync(Asset asset)
+    public async Task<int> CreateAsync(User user)
     {
         const string query = """
-            INSERT INTO public.assets
-            (symbol,
-            name,
-            current_value_eur,
-            value_timestamp)
+            INSERT INTO public.users
+            (username,
+            password_hash,
+            salt,
+            cmc_apikey,
+            created_at)
             VALUES
-            (@Symbol,
-            @Name,
-            @CurrentValueEur
+            (@Username,
+            @PasswordHash,
+            @PasswordSalt,
+            @CmcApiKey,
             now())
             RETURNING id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
-        asset.Id = await connection.ExecuteScalarAsync<int>(query, asset);
-        return asset.Id;
+        user.Id = await connection.ExecuteScalarAsync<int>(query, user);
+        return user.Id;
     }
-    public async Task<bool> UpdateAsync(Asset asset)
+    public async Task<bool> UpdateAsync(User user)
     {
         const string query = """
-            UPDATE public.assets
+            UPDATE public.users
             SET
-            symbol = @Symbol,
-            name = @Name,
-            current_value_eur = @CurrentValueEur,
-            value_timestamp = now()
+            username = @Username,
+            password_hash = @PasswordHash,
+            salt = @PasswordSalt,
+            cmc_apikey = @CmcApiKey
             WHERE
             id = @Id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
-        var affectedRows = await connection.ExecuteAsync(query, asset);
+        var affectedRows = await connection.ExecuteAsync(query, user);
         return affectedRows > 0;
     }
     public async Task<bool> DeleteAsync(int id)
     {
         const string query = """
-            DELETE FROM public.assets
+            DELETE FROM public.users
             WHERE id = @id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
@@ -94,7 +99,7 @@ public class AssetDataAccess : IAssetService
     {
         const string query = """
             SELECT COUNT(*)
-            FROM public.assets;
+            FROM public.users;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
         return await connection.ExecuteScalarAsync<int>(query);

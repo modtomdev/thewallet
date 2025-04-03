@@ -1,5 +1,6 @@
 using ApexCharts;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using thewallet.Shared.Interfaces.CRUD;
 using thewallet.Shared.Services;
 using thewallet.Web.Client.Services.DomainServices;
 using thewallet.Web.Services;

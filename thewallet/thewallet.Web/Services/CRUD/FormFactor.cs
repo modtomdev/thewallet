@@ -1,6 +1,6 @@
-using thewallet.Shared.Services;
+using thewallet.Shared.Interfaces.CRUD;
 
-namespace thewallet.Web.Services;
+namespace thewallet.Web.Services.CRUD;
 
 public class FormFactor : IFormFactor
 {

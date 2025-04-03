@@ -1,89 +1,89 @@
 ﻿using Npgsql;
 using Dapper;
 using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Services;
+using thewallet.Shared.Interfaces.CRUD;
 
-namespace thewallet.Web.Services;
+namespace thewallet.Web.Services.CRUD;
 
-public class CategoryDataAccess : ICategoryService
+public class AssetDataAccess : IAssetService
 {
     private readonly string _connectionString = "";
-    public CategoryDataAccess(IConfiguration configuration)
+    public AssetDataAccess(IConfiguration configuration)
     {
         _connectionString = configuration.GetConnectionString("db") ??
                                 throw new Exception("Missing db connection string.");
     }
-
-    public async Task<IEnumerable<Category>> GetAllAsync()
+    public async Task<IEnumerable<Asset>> GetAllAsync()
     {
         const string query = """
 
             SELECT
             id          as Id,
+            symbol      as Symbol,
             name        as Name,
-            user_id     as UserId,
-            is_expense  as IsExpense,
-            created_at  as CreatedAt
-            FROM public.categories;
+            current_value_eur as CurrentValueEur,
+            value_timestamp as ValueTimestamp
+            FROM public.assets;
 
             """;
 
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryAsync<Category>(query);
+        return await connection.QueryAsync<Asset>(query);
     }
-    public async Task<Category?> GetByIdAsync(int id)
+    public async Task<Asset?> GetByIdAsync(int id)
     {
         const string query = """
             SELECT
             id          as Id,
+            symbol      as Symbol,
             name        as Name,
-            user_id     as UserId,
-            is_expense  as IsExpense,
-            created_at  as CreatedAt
-            FROM public.categories
+            current_value_eur as CurrentValueEur,
+            value_timestamp as ValueTimestamp
+            FROM public.assets
             WHERE id = @id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryFirstOrDefaultAsync<Category>(query, new { id });
+        return await connection.QueryFirstOrDefaultAsync<Asset>(query, new { id });
     }
-    public async Task<int> CreateAsync(Category category)
+    public async Task<int> CreateAsync(Asset asset)
     {
         const string query = """
-            INSERT INTO public.categories
-            (name,
-            user_id,
-            is_expense,
-            created_at)
+            INSERT INTO public.assets
+            (symbol,
+            name,
+            current_value_eur,
+            value_timestamp)
             VALUES
-            (@Name,
-            @UserId,
-            @IsExpense,
+            (@Symbol,
+            @Name,
+            @CurrentValueEur
             now())
             RETURNING id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
-        category.Id = await connection.ExecuteScalarAsync<int>(query, category);
-        return category.Id;
+        asset.Id = await connection.ExecuteScalarAsync<int>(query, asset);
+        return asset.Id;
     }
-    public async Task<bool> UpdateAsync(Category category)
+    public async Task<bool> UpdateAsync(Asset asset)
     {
         const string query = """
-            UPDATE public.categories
+            UPDATE public.assets
             SET
+            symbol = @Symbol,
             name = @Name,
-            user_id = @UserId,
-            is_expense = @IsExpense,
+            current_value_eur = @CurrentValueEur,
+            value_timestamp = now()
             WHERE
             id = @Id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
-        var affectedRows = await connection.ExecuteAsync(query, category);
+        var affectedRows = await connection.ExecuteAsync(query, asset);
         return affectedRows > 0;
     }
     public async Task<bool> DeleteAsync(int id)
     {
         const string query = """
-            DELETE FROM public.categories
+            DELETE FROM public.assets
             WHERE id = @id;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
@@ -94,7 +94,7 @@ public class CategoryDataAccess : ICategoryService
     {
         const string query = """
             SELECT COUNT(*)
-            FROM public.categories;
+            FROM public.assets;
             """;
         using var connection = new NpgsqlConnection(_connectionString);
         return await connection.ExecuteScalarAsync<int>(query);

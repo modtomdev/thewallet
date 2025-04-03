@@ -1,6 +1,6 @@
 ﻿using thewallet.Shared.Models.DomainModels;
 
-namespace thewallet.Shared.Services;
+namespace thewallet.Shared.Interfaces.CRUD;
 
 public interface IRecurringTransactionService
 {

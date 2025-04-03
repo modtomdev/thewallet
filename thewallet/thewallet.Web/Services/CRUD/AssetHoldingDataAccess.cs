@@ -1,9 +1,9 @@
 ﻿using Npgsql;
 using Dapper;
 using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Services;
+using thewallet.Shared.Interfaces.CRUD;
 
-namespace thewallet.Web.Services;
+namespace thewallet.Web.Services.CRUD;
 
 public class AssetHoldingDataAccess : IAssetHoldingService
 {

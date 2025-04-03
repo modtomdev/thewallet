@@ -1,11 +1,13 @@
 using ApexCharts;
-using thewallet.Shared.Services;
+using thewallet.Shared.Interfaces.CRUD;
 using thewallet.Web.Components;
 using thewallet.Web.Endpoints;
 using thewallet.Web.Externals;
 using thewallet.Web.Externals.CoinMarketCap;
 using thewallet.Web.Externals.YahooFinance;
 using thewallet.Web.Services;
+using thewallet.Web.Services.Aggregate;
+using thewallet.Web.Services.CRUD;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +28,7 @@ builder.Services.AddScoped<ITransferService, TransferDataAccess>();
 builder.Services.AddScoped<IUserService, UserDataAccess>();
 builder.Services.AddScoped<IRecurringTransactionService, RecurringTransactionDataAccess>();
 
-builder.Services.AddScoped<IOverviewService, OverviewDataAccess>();
+builder.Services.AddScoped<IOverviewService, OverviewAggregate>();
 
 builder.Services.AddHttpClient<CMCDataAccess>();
 builder.Services.AddScoped<CMCDataAccess>();

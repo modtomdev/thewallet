@@ -1,16 +1,25 @@
 ﻿@page "/accounts"
+
 @inject IFormFactor FormFactor
-@inject IAccountService AccountService
+@inject IAccountAggregateService AccountAggregateService
 @inject NavigationManager NavigationManager
 
 <PageTitle>Accounts</PageTitle>
-
+<h1>YOUR ACCOUNTS:</h1>
 @foreach (var item in _accounts)
 {
     <div class="col-12 mt-2">
         <div class="d-flex justify-content-between p-3 border rounded clickable" @onclick="() => OnAccountClick(item)">
-            <span>xxxx</span>
-            <span class="fw-bold">€xxxx</span>
+            <span>@item.AccountName</span>
+            <span class="fw-bold">€@item.TotalValueEur</span>
+            <ApexChart TItem="GraphSnapshotDTO" Title="Account Value">
+                <ApexPointSeries TItem="GraphSnapshotDTO"
+                                 Items="_graph"
+                                 Name="Account Value"
+                                 SeriesType="SeriesType.Area"
+                                 XValue="e => e.SnapshotTimestamp"
+                                 YValue="e => e.TotalValueEur" />
+            </ApexChart>
         </div>
     </div>
 }

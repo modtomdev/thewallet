@@ -2,8 +2,8 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using thewallet.Shared.Interfaces.CRUD;
 using thewallet.Shared.Models.DomainModels;
-using thewallet.Shared.Services;
 
 public class RecurringTransactionService : IRecurringTransactionService
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using thewallet.Services;
-using thewallet.Shared.Services;
+using thewallet.Shared.Interfaces.CRUD;
 
 namespace thewallet
 {

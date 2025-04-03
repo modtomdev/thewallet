@@ -1,4 +1,4 @@
-using thewallet.Shared.Services;
+using thewallet.Shared.Interfaces.CRUD;
 
 namespace thewallet.Web.Client.Services.DomainServices;
 

@@ -1,4 +1,4 @@
-namespace thewallet.Shared.Services;
+namespace thewallet.Shared.Interfaces.CRUD;
 
 public interface IFormFactor
 {
