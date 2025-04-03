@@ -5,26 +5,18 @@ namespace thewallet.Shared.Pages.Accounts;
 public partial class Index
 {
     private IEnumerable<AccountDTO> _accounts = [];
-    private IEnumerable<GraphSnapshotDTO> _graph = [];
-    private IEnumerable<IEnumerable<GraphSnapshotDTO>> _graphs = [];
+    private Dictionary<int, List<GraphSnapshotDTO>> _graphs = [];
 
     private bool _graphsAreLoading = true;
+    private List<GraphSnapshotDTO> _graph = [];
     protected override async Task OnInitializedAsync()
     {
-        _accounts = await AccountAggregateService.GetOverviewAsync();
-        for (int i = 0; i < _accounts.Count(); i++)
-        {
-            _graph = await AccountAggregateService.GetGraphByUserIdAsync(1);
-            _graphs = _graphs.Append(_graph);
-        }
+        _accounts = await AccountAggregateService.GetOverviewAsync(1);
+        _graphs = await AccountAggregateService.GetGraphsByUserIdAsync(1);
+        //
+        //
+        //
 
-        foreach (var graph in _graphs)
-        {
-            foreach (var value in graph)
-            {
-                value.TotalValueEur = Math.Round(value.TotalValueEur);
-            }
-        }
         _graphsAreLoading = false;
     }
     private void OnAccountClick(AccountDTO account)

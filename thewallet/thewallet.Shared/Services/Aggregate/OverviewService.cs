@@ -13,18 +13,13 @@ public class OverviewService : IOverviewService
         _httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<AccountDTO>> GetAccountDTOsAsync()
+    public async Task<IEnumerable<AccountDTO>> GetOverviewAsync(int id)
     {
-        return await _httpClient.GetFromJsonAsync<IEnumerable<AccountDTO>>($"thewalletapi/overview/user1") ?? [];
+        return await _httpClient.GetFromJsonAsync<IEnumerable<AccountDTO>>($"thewalletapi/overview/user/{id}") ?? [];
     }
 
-    public async Task<IEnumerable<GraphSnapshotDTO>> GetGraphDTOsAsync()
+    public async Task<IEnumerable<GraphSnapshotDTO>> GetGraphDTOsAsync(int id)
     {
-        return await _httpClient.GetFromJsonAsync<IEnumerable<GraphSnapshotDTO>>($"thewalletapi/overview/graph/user1") ?? [];
-    }
-
-    public Task<IEnumerable<AccountDTO>> GetOverviewAsync()
-    {
-        throw new NotImplementedException();
+        return await _httpClient.GetFromJsonAsync<IEnumerable<GraphSnapshotDTO>>($"thewalletapi/overview/graph/user/{id}") ?? [];
     }
 }

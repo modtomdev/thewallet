@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Npgsql;
 using thewallet.Shared.Interfaces.Aggregates;
+using thewallet.Shared.Models.DomainModels;
 using thewallet.Shared.Models.DTOs;
 
 namespace thewallet.Web.Services.Aggregate;
@@ -14,7 +15,7 @@ public class AccountAggregate : IAccountAggregateService
                                 throw new Exception("Missing db connection string.");
     }
 
-    public async Task<IEnumerable<AccountDTO>> GetOverviewAsync() //fixed on user1 //optimize method reusage
+    public async Task<IEnumerable<AccountDTO>> GetOverviewAsync(int id) //optimize reusage
     {
         const string query = """
 
@@ -25,30 +26,29 @@ public class AccountAggregate : IAccountAggregateService
             FROM accounts a
             LEFT JOIN asset_holdings ah ON a.id = ah.account_id
             LEFT JOIN assets ass ON ah.asset_id = ass.id
-            WHERE a.user_id = 1
+            WHERE a.user_id = @id
             GROUP BY a.id, a.name;
             
             """;
 
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryAsync<AccountDTO>(query);
+        return await connection.QueryAsync<AccountDTO>(query, new { id });
     }
-    public async Task<IEnumerable<GraphSnapshotDTO>> GetGraphByUserIdAsync(int accountId) //fixed on user1
+    public async Task<Dictionary<int, List<GraphSnapshotDTO>>> GetGraphsByUserIdAsync(int id)
     {
         const string query = """
 
-            SELECT
-                graph_time as SnapshotTimestamp,
-                account_value_eur as TotalValueEur 
-            FROM graph_snapshots
-            WHERE account_id = @accountId;
+            SELECT gs.account_id, gs.graph_time, gs.account_value_eur
+            FROM graph_snapshots gs
+            JOIN accounts a ON gs.account_id = a.id
+            WHERE a.user_id = @id
+            ORDER BY gs.account_id, gs.graph_time;
               
             """;
-        //review
-        //review
-        //review
-        //review
+
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryAsync<GraphSnapshotDTO>(query, new { accountId });
+        var graphs = await connection.QueryAsync<GraphSnapshotDTO>(query, new { id });
+
+        return graphs.GroupBy(s => s.AccountId).ToDictionary(g => g.Key, g => g.ToList());
     }
 }

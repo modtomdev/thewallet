@@ -10,20 +10,20 @@ public static class OverviewEndpoints
     {
         var endpoints = route.MapGroup("/thewalletapi/overview");
 
-        endpoints.MapGet("/user1", GetAccountsAsync);
-        endpoints.MapGet("/graph/user1", GetGraphAsync);
+        endpoints.MapGet("/user/{id:int}", GetAccountsAsync);
+        endpoints.MapGet("/graph/user/{id:int}", GetGraphAsync);
 
         return route;
     }
 
-    private static async Task<Ok<IEnumerable<AccountDTO>>> GetAccountsAsync(IOverviewService data)
+    private static async Task<Ok<IEnumerable<AccountDTO>>> GetAccountsAsync(int id, IOverviewService data)
     {
-        var accountDto = await data.GetOverviewAsync();
+        var accountDto = await data.GetOverviewAsync(1); //fixed on user 1
         return TypedResults.Ok(accountDto);
     }
-    private static async Task<Ok<IEnumerable<GraphSnapshotDTO>>> GetGraphAsync(IOverviewService data)
+    private static async Task<Ok<IEnumerable<GraphSnapshotDTO>>> GetGraphAsync(int id, IOverviewService data)
     {
-        var graphDto = await data.GetGraphDTOsAsync();
+        var graphDto = await data.GetGraphDTOsAsync(1); //fixed on user 1
         return TypedResults.Ok(graphDto);
     }
 }

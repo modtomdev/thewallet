@@ -14,7 +14,7 @@ public class OverviewAggregate : IOverviewService
                                 throw new Exception("Missing db connection string.");
     }
 
-    public async Task<IEnumerable<AccountDTO>> GetOverviewAsync() //fixed on user1
+    public async Task<IEnumerable<AccountDTO>> GetOverviewAsync(int id) //fixed on user1
     {
         const string query = """
 
@@ -25,15 +25,15 @@ public class OverviewAggregate : IOverviewService
             FROM accounts a
             LEFT JOIN asset_holdings ah ON a.id = ah.account_id
             LEFT JOIN assets ass ON ah.asset_id = ass.id
-            WHERE a.user_id = 1
+            WHERE a.user_id = @id
             GROUP BY a.id, a.name;
             
             """;
 
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryAsync<AccountDTO>(query);
+        return await connection.QueryAsync<AccountDTO>(query, new { id });
     }
-    public async Task<IEnumerable<GraphSnapshotDTO>> GetGraphDTOsAsync() //fixed on user1
+    public async Task<IEnumerable<GraphSnapshotDTO>> GetGraphDTOsAsync(int id) //fixed on user1
     {
         const string query = """
 
@@ -42,14 +42,14 @@ public class OverviewAggregate : IOverviewService
             COALESCE(SUM(gs.account_value_eur), 0) AS TotalValueEur
             FROM graph_snapshots gs
             JOIN accounts a ON gs.account_id = a.id
-            WHERE a.user_id = 1
+            WHERE a.user_id = @id
             GROUP BY gs.graph_time
             ORDER BY gs.graph_time ASC;
                 
             """;
 
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryAsync<GraphSnapshotDTO>(query);
+        return await connection.QueryAsync<GraphSnapshotDTO>(query, new { id });
     }
 }
 
