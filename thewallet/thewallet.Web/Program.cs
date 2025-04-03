@@ -1,11 +1,12 @@
 using ApexCharts;
+using thewallet.Shared.Interfaces.Aggregates;
 using thewallet.Shared.Interfaces.CRUD;
 using thewallet.Web.Components;
 using thewallet.Web.Endpoints;
+using thewallet.Web.Endpoints.CRUD;
 using thewallet.Web.Externals;
 using thewallet.Web.Externals.CoinMarketCap;
 using thewallet.Web.Externals.YahooFinance;
-using thewallet.Web.Services;
 using thewallet.Web.Services.Aggregate;
 using thewallet.Web.Services.CRUD;
 

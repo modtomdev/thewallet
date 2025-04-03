@@ -1,9 +1,9 @@
 using ApexCharts;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using thewallet.Shared.Interfaces.Aggregates;
 using thewallet.Shared.Interfaces.CRUD;
-using thewallet.Shared.Services;
-using thewallet.Web.Client.Services.DomainServices;
-using thewallet.Web.Services;
+using thewallet.Shared.Services.Aggregate;
+using thewallet.Shared.Services.CRUD;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

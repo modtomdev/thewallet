@@ -1,4 +1,4 @@
-﻿namespace thewallet.Web.Endpoints;
+﻿namespace thewallet.Web.Endpoints.CRUD;
 
 public static class AuthenticationEndpoints
 {

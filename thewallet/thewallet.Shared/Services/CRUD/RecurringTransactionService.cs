@@ -1,4 +1,4 @@
-﻿namespace thewallet.Web.Client.Services.DomainServices;
+﻿namespace thewallet.Shared.Services.CRUD;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,7 +1,7 @@
 ﻿using thewallet.Shared.Interfaces.CRUD;
 using thewallet.Shared.Models.DomainModels;
 
-namespace thewallet.Web.Client.Services.DomainServices;
+namespace thewallet.Shared.Services.CRUD;
 
 public class AccountService : IAccountService
 {

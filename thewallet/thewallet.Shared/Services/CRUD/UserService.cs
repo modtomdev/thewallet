@@ -1,26 +1,26 @@
 ﻿using thewallet.Shared.Interfaces.CRUD;
 using thewallet.Shared.Models.DomainModels;
 
-namespace thewallet.Web.Client.Services.DomainServices;
+namespace thewallet.Shared.Services.CRUD;
 
-public class AssetService : IAssetService
+public class UserService : IUserService
 {
-    public Task<int> CreateAsync(Asset asset)
+    public Task<int> CreateAsync(User user)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(int assetId)
+    public Task<bool> DeleteAsync(int userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Asset>> GetAllAsync()
+    public Task<IEnumerable<User>> GetAllAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<Asset?> GetByIdAsync(int assetId)
+    public Task<User?> GetByIdAsync(int userId)
     {
         throw new NotImplementedException();
     }
@@ -30,7 +30,7 @@ public class AssetService : IAssetService
         throw new NotImplementedException();
     }
 
-    public Task<bool> UpdateAsync(Asset asset)
+    public Task<bool> UpdateAsync(User user)
     {
         throw new NotImplementedException();
     }

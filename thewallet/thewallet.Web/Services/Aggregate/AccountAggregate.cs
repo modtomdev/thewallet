@@ -39,12 +39,15 @@ public class AccountAggregate : IAccountAggregateService
 
             SELECT
                 graph_time as SnapshotTimestamp,
-                account_value_eur as TotalValueEur
+                account_value_eur as TotalValueEur 
             FROM graph_snapshots
             WHERE account_id = @accountId;
               
             """;
-
+        //review
+        //review
+        //review
+        //review
         using var connection = new NpgsqlConnection(_connectionString);
         return await connection.QueryAsync<GraphSnapshotDTO>(query, new { accountId });
     }

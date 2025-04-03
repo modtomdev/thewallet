@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using thewallet.Shared.Interfaces.CRUD;
 using thewallet.Shared.Models.DomainModels;
 
-namespace thewallet.Web.Endpoints;
+namespace thewallet.Web.Endpoints.CRUD;
 
 public static class AccountEndpoints
 {

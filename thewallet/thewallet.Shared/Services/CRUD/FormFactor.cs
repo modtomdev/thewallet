@@ -1,6 +1,6 @@
 using thewallet.Shared.Interfaces.CRUD;
 
-namespace thewallet.Web.Client.Services.DomainServices;
+namespace thewallet.Shared.Services.CRUD;
 
 public class FormFactor : IFormFactor
 {

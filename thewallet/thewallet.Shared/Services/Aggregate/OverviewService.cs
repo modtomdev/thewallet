@@ -2,7 +2,7 @@
 using thewallet.Shared.Interfaces.Aggregates;
 using thewallet.Shared.Models.DTOs;
 
-namespace thewallet.Shared.Services;
+namespace thewallet.Shared.Services.Aggregate;
 
 public class OverviewService : IOverviewService
 {
