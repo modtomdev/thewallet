@@ -1,25 +1,48 @@
 ﻿@page "/overview"
 @inject IFormFactor FormFactor
 @inject IOverviewService OverviewService
+@inject NavigationManager NavigationManager     
 
 <PageTitle>Overview</PageTitle>
-<h1>Welcome! Take a look at your holdings!</h1>
+<h1>WELCOME! TAKE A LOOK AT YOUR HOLDINGS!</h1>
 <div>Welcome to your new app running on <em>@Factor</em> using <em>@Platform</em>.</div>
 
-@if (_graph != null && _graph.Any())
+
+@if (_graphIsLoading)
+{
+    <div class="container mt-3">Loading chart data...</div>
+}
+else
 {
     <ApexChart TItem="GraphDTO" Title="Net worth">
         <ApexPointSeries TItem="GraphDTO"
                          Items="_graph"
                          Name="Net Profit"
                          SeriesType="SeriesType.Area"
-                         XValue="e => e.SnapshotTimestamp" truncate
+                         XValue="e => e.SnapshotTimestamp"
                          YValue="e => e.TotalValueEur" />
     </ApexChart>
 }
-else
-{
-    <p>Loading chart data...</p>
-}
 
-<h2>The total value of main user test db is €@_totalValue</h2>
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-between p-3 border rounded">
+        <h2>YOUR NET WORTH IS €@_totalValue</h2>
+    </div>
+</div>
+
+
+<div class="container mt-3">
+    <div class="row">
+
+        @foreach(var item in _accounts)
+        {
+            <div class="col-12 mt-2">
+                <div class="d-flex justify-content-between p-3 border rounded clickable" @onclick="() => OnClick(item)">
+                    <span>@item.AccountName</span>
+                    <span class="fw-bold">€@Math.Round(item.TotalValueEur, 2)</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
