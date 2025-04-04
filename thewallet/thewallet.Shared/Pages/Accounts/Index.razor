@@ -5,27 +5,33 @@
 @inject NavigationManager NavigationManager
 
 <PageTitle>Accounts</PageTitle>
-<h1>YOUR ACCOUNTS:</h1>
+<h1 class="mt-4 mb-4">YOUR ACCOUNTS:</h1>
 
 @foreach (var item in _accountsWithGraphs)
 {
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-left">
+    <div class="container mb-4 p-3 shadow rounded bg-white">
+        <div class="row align-items-center">
+
+            <div class="col-md-5 clickable p-2"
+                 style="cursor: pointer;"
+                 @onclick="() => OnAccountClick(item.Account)">
                 <h4>@item.Account.AccountName</h4>
-                <p>Totale: @item.Account.TotalValueEur €</p>
+                <p><strong>Totale:</strong> @item.Account.TotalValueEur €</p>
             </div>
-            <div class="col-right">
+
+            <div class="col-md-7">
                 @if (_graphsAreLoading)
                 {
-                    <div class="container mt-3">Loading chart data...</div>
+                    <div class="text-muted">Loading chart data...</div>
                 }
                 else
                 {
-                    <ApexChart TItem="GraphSnapshotDTO" Title="Account info">
+                    <ApexChart TItem="GraphSnapshotDTO"
+                               Title=""
+                               Height="280">
                         <ApexPointSeries TItem="GraphSnapshotDTO"
                                          Items="item.Graphs"
-                                         Name="Account info"
+                                         Name="Account Value"
                                          SeriesType="SeriesType.Area"
                                          XValue="e => e.SnapshotTimestamp"
                                          YValue="e => e.TotalValueEur" />
@@ -35,4 +41,6 @@
         </div>
     </div>
 }
+
+
 

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using thewallet.Shared.Interfaces;
+using thewallet.Shared.Models.DomainModels;
 using thewallet.Shared.Models.DTOs;
+using thewallet.Web.Components;
 
 namespace thewallet.Web.Endpoints;
 
@@ -15,16 +17,30 @@ public static class FrontEndpoints
         overviewEndpoints.MapGet("/user/{id:int}/graph", GetGraphAsync);
 
 
-        var accountEnpoints = route.MapGroup("/api/accountsoverview");
+        var accountOverviewEnpoints = route.MapGroup("/api/accountsoverview");
 
-        accountEnpoints.MapGet("/user/{uId:int}", GetGraphsAsync);
+        accountOverviewEnpoints.MapGet("/user/{uId:int}", GetGraphsAsync);
+
+        var accountDetailsEndpoints = route.MapGroup("/api/accountdetails");
+        accountDetailsEndpoints.MapGet("/user/{userId:int}/account/{accountId:int}", GetSingleOverviewAsync);
 
         return route;
     }
+
+    private static async Task<Results<Ok<AccountDTO>,NotFound>> GetSingleOverviewAsync(int userId, int accountId, IFrontService data)
+    {
+        var accountDTO = await data.GetSingleOverviewAsync(userId, accountId);
+        if(accountDTO is not null)
+        {
+            return TypedResults.Ok(accountDTO);
+        }
+        return TypedResults.NotFound();
+    }
+
     private static async Task<Ok<IEnumerable<AccountDTO>>> GetOverviewAsync(int id, IFrontService data)
     {
-        var accountDto = await data.GetOverviewAsync(id);
-        return TypedResults.Ok(accountDto);
+        var accountDTOs = await data.GetOverviewAsync(id);
+        return TypedResults.Ok(accountDTOs);
     }
     private static async Task<Ok<IEnumerable<GraphSnapshotDTO>>> GetGraphAsync(int id, IFrontService data)
     {

@@ -15,7 +15,6 @@ public class FrontService : IFrontService
 
     public async Task<IEnumerable<AccountDTO>> GetOverviewAsync(int id)
     {
-        Console.WriteLine("base address:" + _httpClient.BaseAddress);
         return await _httpClient.GetFromJsonAsync<IEnumerable<AccountDTO>>($"/api/overview/user/{id}") ?? [];
     }
 
@@ -27,5 +26,9 @@ public class FrontService : IFrontService
     {
         return await _httpClient.GetFromJsonAsync<IEnumerable<GraphSnapshotDTO>>($"/api/accountsoverview/user/{id}") ?? [];
 
+    }
+    public async Task<AccountDTO?> GetSingleOverviewAsync(int userId, int accountId)
+    {
+        return await _httpClient.GetFromJsonAsync<AccountDTO>($"/api/accountdetails/user/{userId}/account/{accountId}");
     }
 }

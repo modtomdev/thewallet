@@ -32,6 +32,25 @@ public class FrontDataAccess : IFrontService
         using var connection = new NpgsqlConnection(_connectionString);
         return await connection.QueryAsync<AccountDTO>(query, new { id });
     }
+    public async Task<AccountDTO?> GetSingleOverviewAsync(int userId, int accountId)
+    {
+        const string query = """
+
+            SELECT 
+            a.id AS Id,
+            a.name AS AccountName, 
+            COALESCE(SUM(ah.quantity * ass.current_value_eur), 0) AS TotalValueEur
+            FROM accounts a
+            LEFT JOIN asset_holdings ah ON a.id = ah.account_id
+            LEFT JOIN assets ass ON ah.asset_id = ass.id
+            WHERE a.id = @accountId
+            GROUP BY a.id, a.name;
+            
+            """;
+
+        using var connection = new NpgsqlConnection(_connectionString);
+        return await connection.QueryFirstOrDefaultAsync<AccountDTO>(query, new { accountId });
+    }
     public async Task<IEnumerable<GraphSnapshotDTO>> GetOverviewGraphAsync(int id)
     {
         const string query = """

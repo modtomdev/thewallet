@@ -92,7 +92,7 @@ public class GraphSnapshotDataAccess : IGraphSnapshotService
         return await connection.ExecuteScalarAsync<int>(query);
 
     }
-    public async Task<IEnumerable<GraphSnapshot>> GetByAccountIdAsync(int id)
+    public async Task<IEnumerable<GraphSnapshot>> GetByAccountIdAsync(int userId, int id)
     {
         const string query = """
             SELECT

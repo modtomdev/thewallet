@@ -4,10 +4,11 @@ namespace thewallet.Shared.Pages.Accounts;
 
 public partial class Index
 {
+    //pulsante edit per aggiungere o rimuovere account, rinominare account
     private IEnumerable<AccountDTO> _accounts = [];
     private IEnumerable<GraphSnapshotDTO> _graphs = [];
 
-    private List<AccountWithGraphs> _accountsWithGraphs = [];
+    private List<AccountWithGraphDTO> _accountsWithGraphs = [];
     private bool _graphsAreLoading = true;
 
     protected override async Task OnInitializedAsync()
@@ -17,7 +18,7 @@ public partial class Index
 
         _accountsWithGraphs = _accounts
         .GroupBy(x => x.Id)
-        .Select(g => new AccountWithGraphs
+        .Select(g => new AccountWithGraphDTO
         {
             Account = new AccountDTO
             {
@@ -37,10 +38,5 @@ public partial class Index
     private void OnAccountClick(AccountDTO account)
     {
         NavigationManager.NavigateTo($"accounts/{account.Id}");
-    }
-    public class AccountWithGraphs
-    {
-        public AccountDTO Account { get; set; } = default!;
-        public List<GraphSnapshotDTO> Graphs { get; set; } = [];
     }
 }

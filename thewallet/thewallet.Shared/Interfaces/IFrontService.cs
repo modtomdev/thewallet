@@ -4,7 +4,8 @@ namespace thewallet.Shared.Interfaces;
 
 public interface IFrontService
 {
-    Task<IEnumerable<AccountDTO>> GetOverviewAsync(int id);
-    Task<IEnumerable<GraphSnapshotDTO>> GetOverviewGraphAsync(int id);
-    Task<IEnumerable<GraphSnapshotDTO>> GetGraphsByUserIdAsync(int id);
+    Task<IEnumerable<AccountDTO>> GetOverviewAsync(int userId);
+    Task<IEnumerable<GraphSnapshotDTO>> GetOverviewGraphAsync(int userId);
+    Task<IEnumerable<GraphSnapshotDTO>> GetGraphsByUserIdAsync(int userId);
+    Task<AccountDTO?> GetSingleOverviewAsync(int userId, int accountId);
 }

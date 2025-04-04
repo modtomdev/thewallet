@@ -60,9 +60,9 @@ public static class GraphSnapshotEndpoints
         var count = await data.GetCountAsync();
         return TypedResults.Ok(count);
     }
-    private static async Task<Ok<IEnumerable<GraphSnapshot>>> GetByAccountIdAsync(int accountId, IGraphSnapshotService data)
+    private static async Task<Ok<IEnumerable<GraphSnapshot>>> GetByAccountIdAsync(int userId, int accountId, IGraphSnapshotService data)
     {
-        var graphSnapshots = await data.GetByAccountIdAsync(accountId);
+        var graphSnapshots = await data.GetByAccountIdAsync(userId, accountId);
         return TypedResults.Ok(graphSnapshots);
     }
 }

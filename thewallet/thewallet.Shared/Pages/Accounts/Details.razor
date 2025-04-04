@@ -1,3 +1,44 @@
 ﻿@page "/accounts/{id:int}"
+@inject IFormFactor FormFactor
+@inject IFrontService FrontService
+@inject IGraphSnapshotService GraphSnapshotService
 
 <PageTitle>Account details</PageTitle>
+
+@if (_account is null)
+{
+    <p class="text-danger">Account not found.</p>
+}
+else
+{
+    <div class="container mt-4 mb-5">
+        <h2 class="mb-3">@_account.AccountName</h2>
+
+        <div class="card p-4 shadow-sm mb-4">
+            @if (_graphsAreLoading)
+            {
+                <div class="text-muted">Loading data chart...</div>
+            }
+            else
+            {
+                <ApexChart TItem="GraphSnapshot"
+                           Title="Andamento Valore"
+                           Height="300">
+                    <ApexPointSeries TItem="GraphSnapshot"
+                                     Items="_graph"
+                                     Name="Account Value"
+                                     SeriesType="SeriesType.Area"
+                                     XValue="e => e.GraphTimestamp"
+                                     YValue="e => e.AccountValueEur" />
+                </ApexChart>
+            }
+        </div>
+
+        <div class="card p-4 shadow-sm">
+            <h5 class="mb-3">Account info</h5>
+            <p><strong>Name:</strong> @_account.AccountName</p>
+            <p><strong>Total Value:</strong>€@_account.TotalValueEur</p>
+        </div>
+    </div>
+}
+

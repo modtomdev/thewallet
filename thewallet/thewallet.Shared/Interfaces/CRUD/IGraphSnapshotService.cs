@@ -10,5 +10,5 @@ public interface IGraphSnapshotService
     Task<bool> UpdateAsync(GraphSnapshot graphSnapshot);
     Task<bool> DeleteAsync(int graphSnapshotId);
     Task<int> GetCountAsync();
-    Task<IEnumerable<GraphSnapshot>> GetByAccountIdAsync(int graphSnapshotId);
+    Task<IEnumerable<GraphSnapshot>> GetByAccountIdAsync(int userId, int accountId);
 }

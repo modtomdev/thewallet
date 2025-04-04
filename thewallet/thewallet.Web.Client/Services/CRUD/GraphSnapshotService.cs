@@ -1,10 +1,18 @@
 ﻿using thewallet.Shared.Interfaces.CRUD;
 using thewallet.Shared.Models.DomainModels;
+using System.Net.Http.Json;
 
 namespace thewallet.Shared.Services.CRUD;
 
 public class GraphSnapshotService : IGraphSnapshotService
 {
+    private readonly HttpClient _httpClient;
+
+    public GraphSnapshotService(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
+
     public Task<int> CreateAsync(GraphSnapshot graphSnapshot)
     {
         throw new NotImplementedException();
@@ -20,9 +28,9 @@ public class GraphSnapshotService : IGraphSnapshotService
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<GraphSnapshot>> GetByAccountIdAsync(int graphSnapshotId)
+    public async Task<IEnumerable<GraphSnapshot>> GetByAccountIdAsync(int userId, int accountId)
     {
-        throw new NotImplementedException();
+        return await _httpClient.GetFromJsonAsync<IEnumerable<GraphSnapshot>>($"/api/accountsoverview/user/{userId}/{accountId}") ?? [];
     }
 
     public Task<GraphSnapshot?> GetByIdAsync(int graphSnapshotId)
