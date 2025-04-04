@@ -9,10 +9,14 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 // Add device-specific services used by the thewallet.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
-
-builder.Services.AddSingleton(new HttpClient()
+/*
+builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+    BaseAddress = new Uri("https://localhost:7248/") 
+});*/
+builder.Services.AddHttpClient("thewalletapi", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7248/thewalletapi/");
 });
 
 builder.Services.AddScoped<IAccountTransactionService, AccountTransactionService>();
@@ -26,6 +30,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRecurringTransactionService, RecurringTransactionService>();
 
 builder.Services.AddScoped<IOverviewService, OverviewService>();
+builder.Services.AddScoped<IAccountAggregateService, AccountAggregateService>();
 
 builder.Services.AddApexCharts(e =>
 {

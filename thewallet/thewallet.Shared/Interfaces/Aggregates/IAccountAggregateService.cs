@@ -4,6 +4,5 @@ namespace thewallet.Shared.Interfaces.Aggregates;
 
 public interface IAccountAggregateService
 {
-    Task<IEnumerable<AccountDTO>> GetOverviewAsync(int id);
-    Task<Dictionary<int, List<GraphSnapshotDTO>>> GetGraphsByUserIdAsync(int id);
+    Task<IEnumerable<GraphSnapshotDTO>> GetGraphsByUserIdAsync(int id);
 }

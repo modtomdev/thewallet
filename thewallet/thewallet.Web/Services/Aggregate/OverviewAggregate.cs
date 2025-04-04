@@ -14,12 +14,12 @@ public class OverviewAggregate : IOverviewService
                                 throw new Exception("Missing db connection string.");
     }
 
-    public async Task<IEnumerable<AccountDTO>> GetOverviewAsync(int id) //fixed on user1
+    public async Task<IEnumerable<AccountDTO>> GetOverviewAsync(int id)
     {
         const string query = """
 
             SELECT 
-            a.id AS AccountId,
+            a.id AS Id,
             a.name AS AccountName, 
             COALESCE(SUM(ah.quantity * ass.current_value_eur), 0) AS TotalValueEur
             FROM accounts a
@@ -33,7 +33,7 @@ public class OverviewAggregate : IOverviewService
         using var connection = new NpgsqlConnection(_connectionString);
         return await connection.QueryAsync<AccountDTO>(query, new { id });
     }
-    public async Task<IEnumerable<GraphSnapshotDTO>> GetGraphDTOsAsync(int id) //fixed on user1
+    public async Task<IEnumerable<GraphSnapshotDTO>> GetOverviewGraphAsync(int id)
     {
         const string query = """
 

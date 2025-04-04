@@ -1,8 +1,10 @@
 using ApexCharts;
 using thewallet.Shared.Interfaces.Aggregates;
 using thewallet.Shared.Interfaces.CRUD;
+using thewallet.Shared.Services.Aggregate;
 using thewallet.Web.Components;
 using thewallet.Web.Endpoints;
+using thewallet.Web.Endpoints.Aggregate;
 using thewallet.Web.Endpoints.CRUD;
 using thewallet.Web.Externals;
 using thewallet.Web.Externals.CoinMarketCap;
@@ -14,11 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveWebAssemblyComponents();
+    .AddInteractiveWebAssemblyComponents(); 
 
 // Add device-specific services used by the thewallet.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
-
 builder.Services.AddScoped<IAccountTransactionService, AccountTransactionDataAccess>();
 builder.Services.AddScoped<IAccountService, AccountDataAccess>();
 builder.Services.AddScoped<ICategoryService, CategoryDataAccess>();
@@ -28,8 +29,8 @@ builder.Services.AddScoped<IGraphSnapshotService, GraphSnapshotDataAccess>();
 builder.Services.AddScoped<ITransferService, TransferDataAccess>();
 builder.Services.AddScoped<IUserService, UserDataAccess>();
 builder.Services.AddScoped<IRecurringTransactionService, RecurringTransactionDataAccess>();
-
 builder.Services.AddScoped<IOverviewService, OverviewAggregate>();
+builder.Services.AddScoped<IAccountAggregateService, AccountAggregateService>();
 
 builder.Services.AddHttpClient<CMCDataAccess>();
 builder.Services.AddScoped<CMCDataAccess>();
@@ -80,6 +81,7 @@ app.MapRazorComponents<App>()
         typeof(thewallet.Web.Client._Imports).Assembly);
 
 app.MapOverviewEndpoints();
+app.MapAccountAggregateEndpoints();
 app.MapUserEndpoints();
 app.MapAccountEndpoints();
 app.MapCategoryEndpoints();

@@ -8,18 +8,18 @@ public class OverviewService : IOverviewService
 {
     private readonly HttpClient _httpClient;
 
-    public OverviewService(HttpClient httpClient)
+    public OverviewService(IHttpClientFactory httpClientFactory)
     {
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("thewalletapi");
     }
 
     public async Task<IEnumerable<AccountDTO>> GetOverviewAsync(int id)
     {
-        return await _httpClient.GetFromJsonAsync<IEnumerable<AccountDTO>>($"thewalletapi/overview/user/{id}") ?? [];
+        return await _httpClient.GetFromJsonAsync<IEnumerable<AccountDTO>>($"overview/user/{id}") ?? [];
     }
 
-    public async Task<IEnumerable<GraphSnapshotDTO>> GetGraphDTOsAsync(int id)
+    public async Task<IEnumerable<GraphSnapshotDTO>> GetOverviewGraphAsync(int id)
     {
-        return await _httpClient.GetFromJsonAsync<IEnumerable<GraphSnapshotDTO>>($"thewalletapi/overview/graph/user/{id}") ?? [];
+        return await _httpClient.GetFromJsonAsync<IEnumerable<GraphSnapshotDTO>>($"overview/user/{id}/graph") ?? [];
     }
 }

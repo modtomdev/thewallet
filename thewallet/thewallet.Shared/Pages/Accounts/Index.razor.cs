@@ -5,22 +5,43 @@ namespace thewallet.Shared.Pages.Accounts;
 public partial class Index
 {
     private IEnumerable<AccountDTO> _accounts = [];
-    private Dictionary<int, List<GraphSnapshotDTO>> _graphs = [];
+    private IEnumerable<GraphSnapshotDTO> _graphs = [];
 
+    private List<AccountWithGraphs> _accountsWithGraphs = [];
     private bool _graphsAreLoading = true;
-    private List<GraphSnapshotDTO> _graph = [];
+
     protected override async Task OnInitializedAsync()
     {
-        _accounts = await AccountAggregateService.GetOverviewAsync(1);
+        _accounts = await OverviewService.GetOverviewAsync(1);
         _graphs = await AccountAggregateService.GetGraphsByUserIdAsync(1);
-        //
-        //
-        //
+
+        _accountsWithGraphs = _accounts
+        .GroupBy(x => x.Id)
+        .Select(g => new AccountWithGraphs
+        {
+            Account = new AccountDTO
+            {
+                Id = g.Key,
+                AccountName = g.First().AccountName,
+                TotalValueEur = Math.Round(g.Sum(x => x.TotalValueEur), 2)
+            },
+            Graphs = _graphs
+                .Where(graph => graph.AccountId == g.Key)
+                .ToList()
+        })
+        .ToList();
+
 
         _graphsAreLoading = false;
     }
     private void OnAccountClick(AccountDTO account)
     {
-        NavigationManager.NavigateTo($"accounts/{account.AccountId}");
+        NavigationManager.NavigateTo($"accounts/{account.Id}");
     }
+    public class AccountWithGraphs
+    {
+        public AccountDTO Account { get; set; } = default!;
+        public List<GraphSnapshotDTO> Graphs { get; set; } = [];
+    }
+
 }

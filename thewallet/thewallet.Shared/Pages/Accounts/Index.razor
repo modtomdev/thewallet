@@ -2,24 +2,38 @@
 
 @inject IFormFactor FormFactor
 @inject IAccountAggregateService AccountAggregateService
+@inject IOverviewService OverviewService
 @inject NavigationManager NavigationManager
 
 <PageTitle>Accounts</PageTitle>
 <h1>YOUR ACCOUNTS:</h1>
-@foreach (var item in _accounts)
+
+@foreach (var item in _accountsWithGraphs)
 {
-    <div class="col-12 mt-2">
-        <div class="d-flex justify-content-between p-3 border rounded clickable" @onclick="() => OnAccountClick(item)">
-            <span>@item.AccountName</span>
-            <span class="fw-bold">€@item.TotalValueEur</span>
-            <ApexChart TItem="GraphSnapshotDTO" Title="Account Value">
-                <ApexPointSeries TItem="GraphSnapshotDTO"
-                                 Items="_graph"
-                                 Name="Account Value"
-                                 SeriesType="SeriesType.Area"
-                                 XValue="e => e.SnapshotTimestamp"
-                                 YValue="e => e.TotalValueEur" />
-            </ApexChart>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-left">
+                <h4>@item.Account.AccountName</h4>
+                <p>Totale: @item.Account.TotalValueEur €</p>
+            </div>
+            <div class="col-right">
+                @if (_graphsAreLoading)
+                {
+                    <div class="container mt-3">Loading chart data...</div>
+                }
+                else
+                {
+                    <ApexChart TItem="GraphSnapshotDTO" Title="Account info">
+                        <ApexPointSeries TItem="GraphSnapshotDTO"
+                                         Items="item.Graphs"
+                                         Name="Account info"
+                                         SeriesType="SeriesType.Area"
+                                         XValue="e => e.SnapshotTimestamp"
+                                         YValue="e => e.TotalValueEur" />
+                    </ApexChart>
+                }
+            </div>
         </div>
     </div>
 }
+

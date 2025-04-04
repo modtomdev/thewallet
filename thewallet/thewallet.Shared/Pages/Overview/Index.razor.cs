@@ -1,5 +1,4 @@
-﻿using ApexCharts;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using thewallet.Shared.Models.DTOs;
 
 namespace thewallet.Shared.Pages.Overview;
@@ -17,7 +16,7 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        _graph = await OverviewService.GetGraphDTOsAsync(1);
+        _graph = await OverviewService.GetOverviewGraphAsync(1);
         foreach (var item in _graph)
         {
             item.TotalValueEur = Math.Round(item.TotalValueEur);
@@ -29,6 +28,6 @@ public partial class Index
     }
     private void OnAccountClick(AccountDTO overview)
     {
-        NavigationManager.NavigateTo($"accounts/{overview.AccountId}");
+        NavigationManager.NavigateTo($"accounts/{overview.Id}");
     }
 }

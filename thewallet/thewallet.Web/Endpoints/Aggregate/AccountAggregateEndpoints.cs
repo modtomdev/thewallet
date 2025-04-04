@@ -10,20 +10,14 @@ public static class AccountAggregateEndpoints
     {
         var endpoints = route.MapGroup("/thewalletapi/accountsoverview");
 
-        endpoints.MapGet("/user/{id:int}", GetAccountsAsync);
-        endpoints.MapGet("/graph/user/{id:int}", GetGraphsAsync);
+        endpoints.MapGet("/user/{id:int}/graph", GetGraphsAsync);
 
         return route;
     }
 
-    private static async Task<Ok<IEnumerable<AccountDTO>>> GetAccountsAsync(int id, IAccountAggregateService data)
+    private static async Task<Ok<IEnumerable<GraphSnapshotDTO>>> GetGraphsAsync(int id, IAccountAggregateService data)
     {
-        var accountDto = await data.GetOverviewAsync(1);
-        return TypedResults.Ok(accountDto);
-    }
-    private static async Task<Ok<Dictionary<int, List<GraphSnapshotDTO>>>> GetGraphsAsync(int id, IAccountAggregateService data)
-    {
-        var graphDto = await data.GetGraphsByUserIdAsync(1); //fixed on user 1
+        var graphDto = await data.GetGraphsByUserIdAsync(id);
         return TypedResults.Ok(graphDto);
     }
 }
