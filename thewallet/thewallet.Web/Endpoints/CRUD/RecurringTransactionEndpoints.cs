@@ -8,7 +8,7 @@ public static class RecurringTransactionEndpoints
 {
     public static IEndpointRouteBuilder MapRecurringTransactionEndpoints(this IEndpointRouteBuilder route)
     {
-        var endpoints = route.MapGroup("/thewalletapi/recurring");
+        var endpoints = route.MapGroup("/api/recurring");
         endpoints.MapGet("/", GetAllAsync);
         endpoints.MapGet("/{id:int}", GetByIdAsync);
         endpoints.MapPost("/", CreateAsync);

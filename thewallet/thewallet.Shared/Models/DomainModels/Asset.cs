@@ -7,5 +7,4 @@ public class Asset
     public string Name { get; set; } = default!;
     public decimal CurrentValueEur { get; set; }
     public DateTime ValueTimestamp { get; set; }
-    public IEnumerable<AssetHolding> AssetHoldings { get; set; } = [];
 }

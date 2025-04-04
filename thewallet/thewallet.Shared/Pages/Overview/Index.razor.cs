@@ -16,14 +16,14 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        _graph = await OverviewService.GetOverviewGraphAsync(1);
+        _graph = await FrontService.GetOverviewGraphAsync(1);
         foreach (var item in _graph)
         {
             item.TotalValueEur = Math.Round(item.TotalValueEur);
         }
         _graphIsLoading = false;
 
-        _accounts = await OverviewService.GetOverviewAsync(1);
+        _accounts = await FrontService.GetOverviewAsync(1);
         _totalValue = Math.Round(_accounts.Sum(x => x.TotalValueEur), 2);
     }
     private void OnAccountClick(AccountDTO overview)

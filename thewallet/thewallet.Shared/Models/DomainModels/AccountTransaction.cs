@@ -9,7 +9,4 @@ public class AccountTransaction
     public decimal Amount { get; set; }
     public string Description { get; set; } = default!;
     public DateTime TransactionTimestamp { get; set; }
-    public required Account AssociatedAccount { get; set; }
-    public required Category AssociatedCategory { get; set; }
-    public required AssetHolding AssociatedAssetHolding { get; set; }
 }

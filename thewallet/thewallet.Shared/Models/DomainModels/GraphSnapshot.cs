@@ -6,5 +6,4 @@ public class GraphSnapshot
     public int AccountId { get; set; }
     public DateTime GraphTimestamp { get; set; }
     public decimal AccountValueEur { get; set; }
-    public required Account AssociatedAccount { get; set; }
 }

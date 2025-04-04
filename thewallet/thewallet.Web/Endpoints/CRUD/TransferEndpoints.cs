@@ -8,7 +8,7 @@ public static class TransferEndpoints
 {
     public static IEndpointRouteBuilder MapTransferEndpoints(this IEndpointRouteBuilder route)
     {
-        var endpoints = route.MapGroup("/thewalletapi/transfers");
+        var endpoints = route.MapGroup("/api/transfers");
         endpoints.MapGet("/", GetAllAsync);
         endpoints.MapGet("/{id:int}", GetByIdAsync);
         endpoints.MapPost("/", CreateAsync);

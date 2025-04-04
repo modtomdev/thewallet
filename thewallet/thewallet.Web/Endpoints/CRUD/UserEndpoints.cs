@@ -8,7 +8,7 @@ public static class UserEndpoints
 {
     public static IEndpointRouteBuilder MapUserEndpoints(this IEndpointRouteBuilder route)
     {
-        var endpoints = route.MapGroup("/thewalletapi/users");
+        var endpoints = route.MapGroup("/api/users");
         endpoints.MapGet("/", GetAllAsync);
         endpoints.MapGet("/{id:int}", GetByIdAsync);
         endpoints.MapPost("/", CreateAsync);

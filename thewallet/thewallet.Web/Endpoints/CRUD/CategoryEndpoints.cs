@@ -8,7 +8,7 @@ public static class CategoryEndpoints
 {
     public static IEndpointRouteBuilder MapCategoryEndpoints(this IEndpointRouteBuilder route)
     {
-        var endpoints = route.MapGroup("/thewalletapi/categories");
+        var endpoints = route.MapGroup("/api/categories");
         endpoints.MapGet("/", GetAllAsync);
         endpoints.MapGet("/{id:int}", GetByIdAsync);
         endpoints.MapPost("/", CreateAsync);

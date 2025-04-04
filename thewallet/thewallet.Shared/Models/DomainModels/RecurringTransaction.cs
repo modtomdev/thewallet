@@ -8,5 +8,4 @@ public class RecurringTransaction
     public DateTime CreatedAt { get; set; } 
     public int AssetHoldingId { get; set; } 
     public decimal Quantity { get; set; }
-    public required AssetHolding AssetHolding { get; set; }
 }

@@ -8,7 +8,7 @@ public static class GraphSnapshotEndpoints
 {
     public static IEndpointRouteBuilder MapGraphSnapshotEndpoints(this IEndpointRouteBuilder route)
     {
-        var endpoints = route.MapGroup("/thewalletapi/graphsnapshots");
+        var endpoints = route.MapGroup("/api/graphsnapshots");
 
         endpoints.MapGet("/", GetAllAsync);
         endpoints.MapGet("/{id:int}", GetByIdAsync);

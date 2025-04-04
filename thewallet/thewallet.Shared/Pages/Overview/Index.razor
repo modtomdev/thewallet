@@ -1,7 +1,7 @@
 ﻿@page "/overview"
 
 @inject IFormFactor FormFactor
-@inject IOverviewService OverviewService
+@inject IFrontService FrontService
 @inject NavigationManager NavigationManager     
 
 <PageTitle>Overview</PageTitle>
@@ -18,7 +18,7 @@ else
     <ApexChart TItem="GraphSnapshotDTO" Title="Net worth">
         <ApexPointSeries TItem="GraphSnapshotDTO"
                          Items="_graph"
-                         Name="Net Profit"
+                         Name="Net worth"
                          SeriesType="SeriesType.Area"
                          XValue="e => e.SnapshotTimestamp"
                          YValue="e => e.TotalValueEur" />

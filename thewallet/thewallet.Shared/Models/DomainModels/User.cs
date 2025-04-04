@@ -8,6 +8,4 @@ public class User
     public string PasswordSalt { get; set; } = default!;
     public string? CmcApiKey { get; set; }
     public DateTime CreatedAt { get; set; }
-    public IEnumerable<Category> UserCategories { get; set; } = [];
-    public IEnumerable<Account> UserAccounts { get; set; } = [];
 }

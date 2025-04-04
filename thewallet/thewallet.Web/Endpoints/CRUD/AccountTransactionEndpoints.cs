@@ -8,7 +8,7 @@ public static class AccountTransactionEndpoints
 {
     public static IEndpointRouteBuilder MapAccountTransactionEndpoints(this IEndpointRouteBuilder route)
     {
-        var endpoints = route.MapGroup("/thewalletapi/transactions");
+        var endpoints = route.MapGroup("/api/transactions");
         endpoints.MapGet("/", GetAllAsync);
         endpoints.MapGet("/{id:int}", GetByIdAsync);
         endpoints.MapPost("/", CreateAsync);

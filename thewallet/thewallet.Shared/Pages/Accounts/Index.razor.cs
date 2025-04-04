@@ -12,8 +12,8 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        _accounts = await OverviewService.GetOverviewAsync(1);
-        _graphs = await AccountAggregateService.GetGraphsByUserIdAsync(1);
+        _accounts = await FrontService.GetOverviewAsync(1);
+        _graphs = await FrontService.GetGraphsByUserIdAsync(1);
 
         _accountsWithGraphs = _accounts
         .GroupBy(x => x.Id)
@@ -43,5 +43,4 @@ public partial class Index
         public AccountDTO Account { get; set; } = default!;
         public List<GraphSnapshotDTO> Graphs { get; set; } = [];
     }
-
 }

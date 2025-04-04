@@ -8,7 +8,7 @@ public static class AssetHoldingEndpoints
 {
     public static IEndpointRouteBuilder MapAssetHoldingEndpoints(this IEndpointRouteBuilder route)
     {
-        var endpoints = route.MapGroup("/thewalletapi/assetholdings");
+        var endpoints = route.MapGroup("/api/assetholdings");
         endpoints.MapGet("/", GetAllAsync);
         endpoints.MapGet("/{id:int}", GetByIdAsync);
         endpoints.MapPost("/", CreateAsync);
