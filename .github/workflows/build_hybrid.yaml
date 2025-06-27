@@ -1,0 +1,43 @@
+name: Build Blazor Hybrid on Version Change
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'version'
+
+jobs:
+  build-hybrid:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Version
+        id: set_version
+        run: |
+          $version = Get-Content ./version -Raw
+          echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui
+
+      - name: Restore
+        run: dotnet restore thewallet.sln
+
+      - name: Build Blazor Hybrid
+        run: dotnet build thewallet.web.client/thewallet.web.client.csproj --configuration Release --no-restore
+
+      - name: Publish Blazor Hybrid
+        run: dotnet publish thewallet.web.client/thewallet.web.client.csproj --configuration Release -o ./publish
+
+      - name: Upload Hybrid Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hybrid-app
+          path: ./publish
